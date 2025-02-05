@@ -44,9 +44,14 @@ function getUsers()
     while ($leftUser) {
         $result = CRest::call('user.get', [
             'select' => ['*', 'UF_*'],
-            'filter' => ['UF_DEPARTMENT' => 5], // filter for sales depertment, id: UF_DEPARTMENT = 5
+            'filter' => ['UF_DEPARTMENT' => 5], // sales department filter
             'start' => $next,
         ]);
+
+        if (!isset($result['result']) || !is_array($result['result'])) {
+            return []; // Return an empty array if the API fails
+        }
+
         $users = array_merge($users, $result['result']);
 
         if (!isset($result['next'])) {
@@ -58,6 +63,7 @@ function getUsers()
 
     return $users;
 }
+
 function get_filtered_users($filter = [], $select = [], $order = [])
 {
     $users = [];

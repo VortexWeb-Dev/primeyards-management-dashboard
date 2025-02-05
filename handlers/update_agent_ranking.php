@@ -9,7 +9,7 @@ include_once __DIR__ . '/../controllers/calculate_agent_rank.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (php_sapi_name() !== 'cli' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     clearCache('global_ranking_cache.json');
 }
 

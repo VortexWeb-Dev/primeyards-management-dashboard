@@ -8,8 +8,12 @@ function get_all_deals()
         'select' => ['*', 'UF_*'],
         'filter' => ['CATEGORY_ID' => 0],
     ]);
-    $deals = $result['result'];
-    return $deals;
+
+    if (!isset($result['result']) || !is_array($result['result'])) {
+        return []; // Return an empty array if the API fails
+    }
+
+    return $result['result'];
 }
 
 
@@ -31,8 +35,12 @@ function getFilteredDeals($filter = [], $select = null, $order = null)
         'filter' => $filter,
         'order' => $order,
     ]);
-    $deals = $result['result'];
-    return $deals;
+
+    if (!isset($result['result']) || !is_array($result['result'])) {
+        return []; // Return empty array instead of null
+    }
+
+    return $result['result'];
 }
 
 // get paginated deals
